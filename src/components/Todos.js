@@ -3,18 +3,31 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import { deleteTodo } from '../actions/deleteActions';
 
+
  class Todos extends React.Component {
+
+    constructor(props){
+        super(props);
+      }
+      
+    deleteTodo = (e, id) => {
+        e.preventDefault();
+        this.props.deleteTodo(id);
+       // console.log(this.props.todoList);
+       // console.log(store.getState());
+    }
+
     render() {
         return (
             <div className="container">
                 <div className="todos collection">
-                    {console.log(this.props.todos)}
                     {   
                         //this.props.todos.length ? 
-                        (this.props.todos.map((todo, key) => {
+                        (this.props.todoList.map((todo, key) => {
                             return (
                                 <div  className="collection-item">
-                                    <span className="collection-item" >{todo.body}</span>
+                                    <span className="collection-item">{todo.body}</span>
+                                    <button onClick={(e) => {this.deleteTodo(e, todo.id)}}>x</button> 
                                 </div>
                                 
                             )
@@ -29,10 +42,15 @@ import { deleteTodo } from '../actions/deleteActions';
    
 }
 
+
 const mapStateToProps = (state) => {
     return {
-        todos: state.todos
+        todoList: state.todos
     }
 }
 
-export default connect(mapStateToProps, null)(Todos)
+Todos.propTypes = {
+    deleteTodo: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, { deleteTodo })(Todos)

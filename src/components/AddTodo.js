@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import { addTodo } from '../actions/addActions';
 
 
-
-
 class AddTodo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            body: ''
+            body: '',
+            id: this.id
         }
     }
 
@@ -22,12 +21,16 @@ class AddTodo extends React.Component {
 
     handelSubmit = (event) => {
         event.preventDefault();
-        
+        const id = Math.floor(Math.random() * 101);
         const todo = {
-            body: this.state.body
+            body: this.state.body,
+            id: id
         };
-
         this.props.addTodo(todo);
+        this.setState({
+            body: ''
+        });
+        // console.log(store.getState());
     }
 
 
@@ -36,7 +39,7 @@ class AddTodo extends React.Component {
             <div className="container">
                 <form onSubmit={this.handelSubmit}>
                     <label> Add new todo:</label>
-                    <input type="text" name="todo" onChange={this.handelChange}  />
+                    <input type="text" name="todo" autocomplete='off' onChange={this.handelChange} value={this.state.body} />
                     <button type="submit">Submit</button>
                 </form>
             </div>

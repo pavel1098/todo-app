@@ -2,17 +2,19 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/index'
 
-const intialState = {
+export const initialState = {
     todos: [
-        {body: 'Buy some milk'},
-        {body: 'Walking with a dog'}
+        {id: 1, body: 'Buy some milk'},
+        {id: 2, body: 'Walking with a dog'}
     ]
-};
+}
+
+
 const middleWare = [thunk]
 
 const store = createStore(
     rootReducer, 
-    intialState, 
+    initialState, 
     applyMiddleware(...middleWare)
 );
 
