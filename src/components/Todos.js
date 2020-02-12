@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
+import { deleteTodo } from '../actions/deleteActions';
 
  class Todos extends React.Component {
     render() {
