@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import { deleteTodo } from '../actions/deleteActions';
+import { getTodos } from '../actions/getActions';
+import store from '../store';
+
 
 
  class Todos extends React.Component {
@@ -9,6 +12,11 @@ import { deleteTodo } from '../actions/deleteActions';
     constructor(props){
         super(props);
       }
+
+    componentWillMount() {
+        this.props.getTodos();
+        console.log(store.getState());
+    }
       
     deleteTodo = (e, id) => {
         e.preventDefault();
@@ -26,7 +34,7 @@ import { deleteTodo } from '../actions/deleteActions';
                         (this.props.todoList.map((todo, key) => {
                             return (
                                 <div  className="collection-item">
-                                    <span className="collection-item">{todo.body}</span>
+                                    <span className="collection-item">{todo.title}</span>
                                     <button onClick={(e) => {this.deleteTodo(e, todo.id)}}>x</button> 
                                 </div>
                                 
@@ -45,12 +53,13 @@ import { deleteTodo } from '../actions/deleteActions';
 
 const mapStateToProps = (state) => {
     return {
-        todoList: state.todos
+        todoList: state.todos  
     }
 }
 
 Todos.propTypes = {
-    deleteTodo: PropTypes.func.isRequired
+    deleteTodo: PropTypes.func.isRequired,
+    getTodos: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { deleteTodo })(Todos)
+export default connect(mapStateToProps, { deleteTodo, getTodos })(Todos)
